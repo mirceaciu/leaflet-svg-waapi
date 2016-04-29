@@ -5,8 +5,11 @@
 }
 
 .css-icon{}
-
 html, body, #map {
   height:100%;
   width:100%;
+}
+
+.ambulance-class {
+  display: none !important
 }
