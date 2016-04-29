@@ -15,7 +15,7 @@ var ambulanceClass = L.divIcon({
 });
 
 var interventionClass = L.divIcon({
-		  className: "invervention-class",
+		  className: "intervention-class",
 		  html: masvg,
 		  iconSize: [20,20],
 		  iconAnchor: [20,20]
@@ -32,8 +32,48 @@ var geojsonLayer = L.geoJson(masini, {
 
 for (var i=0; i < pointArray.length; i++){
 	if (pointArray[i].feature.properties.tip_util === "ambulanta"){
-		var marker2 = new L.Marker(pointArray[i]._latlng, {icon: ambulanceClass}).bindPopup(pointArray[i].feature.properties.tip_util).openPopup().addTo(map);
+		console.log('test');
+		var marker2 = new L.Marker(pointArray[i]._latlng, {icon: ambulanceClass}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);
 	} else {
-		var marker3 = new L.Marker(pointArray[i]._latlng, {icon: interventionClass}).bindPopup(pointArray[i].feature.properties.tip_util).openPopup().addTo(map);
+		var marker3 = new L.Marker(pointArray[i]._latlng, {icon: interventionClass}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);
 	}
+};
+
+function interventiiAnim(){
+	for (j=0; j < 25; j++){
+		var player = document.getElementsByClassName("intervention-class")[j].getElementsByTagName('svg')[0].animate([
+				 {transform: 'scale(0)', opacity: 1},
+				{transform: 'scale(2)', opacity: .7}
+			], {
+				duration: 700, //milliseconds
+				easing: 'ease-in-out', //'linear', a bezier curve, etc.
+				delay: 1, //milliseconds
+				iterations: Infinity, //or a number
+				direction: 'normal', //'normal', 'reverse', etc.
+				fill: 'auto' //'backwards', 'both', 'none', 'auto'
+			});
+	}
+};
+
+function ambulanteAnim(){
+	for (j=0; j < 11; j++){
+		var player = document.getElementsByClassName("ambulance-class")[j].getElementsByTagName('svg')[0].animate([
+				 {transform: 'scale(1)'},
+				{transform: 'scale(3)'}
+			], {
+				duration: 700, //milliseconds
+				easing: 'ease-in-out', //'linear', a bezier curve, etc.
+				delay: 1, //milliseconds
+				iterations: 1, //or a number
+				direction: 'normal', //'normal', 'reverse', etc.
+				fill: 'auto' //'backwards', 'both', 'none', 'auto'
+			});
+
+				document.getElementsByClassName("ambulance-class")[j].getElementsByTagName('svg')[0].style.transform = "scale(3,3)"
+
+
+	}
+
+
+
 };
