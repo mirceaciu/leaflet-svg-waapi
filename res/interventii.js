@@ -28,6 +28,13 @@ var interventionClass = L.divIcon({
 		  iconAnchor: [20,20]
 });
 
+var interventionClass2 = L.divIcon({
+		  className: "intervention-class2",
+		  html: masvg,
+		  iconSize: [20,20],
+		  iconAnchor: [20,20]
+});
+
 pointArray = [];
 var geojsonLayer = L.geoJson(masini, {
     pointToLayer: function(feature, latlng) {
@@ -40,29 +47,48 @@ var geojsonLayer = L.geoJson(masini, {
 for (var i=0; i < pointArray.length; i++){
 	if (pointArray[i].feature.properties.tip_util === "ambulanta"){
 		if(pointArray[i].feature.properties.status === "liber"){
-				var marker2 = new L.Marker(pointArray[i]._latlng, {icon: ambulanceClass}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);
+				var marker2 = new L.Marker(pointArray[i]._latlng, {icon: ambulanceClass, draggable:'true'}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);
 			}else {
 				var marker2 = new L.Marker(pointArray[i]._latlng, {icon: ambulanceClass2}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);
 			}
 	} else {
-		var marker3 = new L.Marker(pointArray[i]._latlng, {icon: interventionClass}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);
-	}
+		if(pointArray[i].feature.properties.status === "liber"){
+		var marker3 = new L.Marker(pointArray[i]._latlng, {icon: interventionClass, draggable:'true'}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);
+	}else {
+		var marker3 = new L.Marker(pointArray[i]._latlng, {icon: interventionClass2}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);}
+	};
 };
 
 function interventiiAnim(){
-	for (j=0; j < 25; j++){
+	for (j=0; j < 17; j++){
 		var player = document.getElementsByClassName("intervention-class")[j].getElementsByTagName('svg')[0].animate([
-				 {transform: 'scale(0)', opacity: 1},
-				{transform: 'scale(2)', opacity: .7}
+				 {transform: 'scale(1)'},
+				{transform: 'scale(2.5)'}
 			], {
 				duration: 700, //milliseconds
 				easing: 'ease-in-out', //'linear', a bezier curve, etc.
 				delay: 1, //milliseconds
 				iterations: Infinity, //or a number
-				direction: 'normal', //'normal', 'reverse', etc.
+				direction: 'alternate', //'normal', 'reverse', etc.
+				fill: 'auto' //'backwards', 'both', 'none', 'auto'
+			});
+	};
+
+	for (k=0; k < 8; k++){
+		var player2 = document.getElementsByClassName("intervention-class2")[k].getElementsByTagName('svg')[0].animate([
+				 {transform: 'scale(1)', opacity: 1},
+				{transform: 'scale(2.5)', opacity: .7}
+			], {
+				duration: 700, //milliseconds
+				easing: 'ease-in-out', //'linear', a bezier curve, etc.
+				delay: 1, //milliseconds
+				iterations: Infinity, //or a number
+				direction: 'alternate', //'normal', 'reverse', etc.
 				fill: 'auto' //'backwards', 'both', 'none', 'auto'
 			});
 	}
+
+
 };
 
 function ambulanteAnim(){
@@ -100,5 +126,10 @@ function ambulanteAnim(){
 
 function colorMe(){
 	for (j=0; j < 5; j++){
-		document.getElementsByClassName("ambulance-class")[j].getElementsByTagName('svg')[0].getElementById('fill').style.fill = "green"
+		document.getElementsByClassName("ambulance-class")[j].getElementsByTagName('svg')[0].getElementById('fill').style.fill = "blue"
+}};
+
+function colorMe2(){
+	for (g=0; g < 17; g++){
+		document.getElementsByClassName("intervention-class")[g].getElementsByTagName('svg')[0].getElementById('fill').style.fill = "green"
 }};
