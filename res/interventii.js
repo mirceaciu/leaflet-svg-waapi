@@ -14,6 +14,13 @@ var ambulanceClass = L.divIcon({
 		  iconAnchor: [20,20]
 });
 
+var ambulanceClass2 = L.divIcon({
+		  className: "ambulance-class2",
+		  html: masvg,
+		  iconSize: [20,20],
+		  iconAnchor: [20,20]
+});
+
 var interventionClass = L.divIcon({
 		  className: "intervention-class",
 		  html: masvg,
@@ -32,8 +39,11 @@ var geojsonLayer = L.geoJson(masini, {
 
 for (var i=0; i < pointArray.length; i++){
 	if (pointArray[i].feature.properties.tip_util === "ambulanta"){
-		console.log('test');
-		var marker2 = new L.Marker(pointArray[i]._latlng, {icon: ambulanceClass}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);
+		if(pointArray[i].feature.properties.status === "liber"){
+				var marker2 = new L.Marker(pointArray[i]._latlng, {icon: ambulanceClass}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);
+			}else {
+				var marker2 = new L.Marker(pointArray[i]._latlng, {icon: ambulanceClass2}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);
+			}
 	} else {
 		var marker3 = new L.Marker(pointArray[i]._latlng, {icon: interventionClass}).bindPopup(pointArray[i].feature.properties.tip_util).addTo(map);
 	}
@@ -56,7 +66,7 @@ function interventiiAnim(){
 };
 
 function ambulanteAnim(){
-	for (j=0; j < 11; j++){
+	for (j=0; j < 5; j++){
 		var player = document.getElementsByClassName("ambulance-class")[j].getElementsByTagName('svg')[0].animate([
 				 {transform: 'scale(1)'},
 				{transform: 'scale(3)'}
@@ -70,10 +80,25 @@ function ambulanteAnim(){
 			});
 
 				document.getElementsByClassName("ambulance-class")[j].getElementsByTagName('svg')[0].style.transform = "scale(3,3)"
+	};
 
-
+	for (p=0; p < 6; p++){
+		var player3 = document.getElementsByClassName("ambulance-class2")[p].getElementsByTagName('svg')[0].animate([
+				 {transform: 'scale(1)'},
+				{transform: 'scale(3)'}
+			], {
+				duration: 700, //milliseconds
+				easing: 'ease-in-out', //'linear', a bezier curve, etc.
+				delay: 1, //milliseconds
+				iterations: 1, //or a number
+				direction: 'normal', //'normal', 'reverse', etc.
+				fill: 'auto' //'backwards', 'both', 'none', 'auto'
+			});
+				document.getElementsByClassName("ambulance-class2")[p].getElementsByTagName('svg')[0].style.transform = "scale(3,3)"
 	}
-
-
-
 };
+
+function colorMe(){
+	for (j=0; j < 5; j++){
+		document.getElementsByClassName("ambulance-class")[j].getElementsByTagName('svg')[0].getElementById('fill').style.fill = "green"
+}};
